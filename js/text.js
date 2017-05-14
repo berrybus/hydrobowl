@@ -1,139 +1,180 @@
 var pause = false;
 var buzzed = false;
-var curNum =  1;
+var curNum = 1;
 var finish = true;
 var correct = false;
-var qu = readQues(curNum);
-var an = readAns(curNum);
-var len = getLen();
+var qu = "";
+readQues(curNum)
+var an = "";
+readAns(curNum)
+var len = 1;
+getLen();
 var score = 0;
+getScore();
+
+
+
+function runFirst() {
+    document.getElementById("inputAnswer").value = "";
+
+    document.body.onkeyup = function(e) {
+        if (e.keyCode == 32) {
+            if (this === document.activeElement) {
+                buzz();
+            }
+        }
+        if (e.keyCode == 78) {
+            if (this === document.activeElement) {
+                startText();
+            }
+        }
+
+        if (e.keyCode == 13) {
+            if (this != document.activeElement) {
+                answer();
+                document.activeElement.blur();
+            }
+        }
+
+        if (e.keyCode === 27) {
+            document.activeElement.blur();
+        }
+    }
+}
+
+window.onload = runFirst;
 
 function write4() {
-var playersRef = firebase.database().ref("players/");
+    var playersRef = firebase.database().ref("players/");
 
-playersRef.set({
-   John: {
-      number: 1,
-      age: 30
-   },
-	
-   Amanda: {
-      number: 2,
-      age: 20
-   }
-});
+    playersRef.set({
+        John: {
+            number: 1,
+            age: 30
+        },
+
+        Amanda: {
+            number: 2,
+            age: 20
+        }
+    });
 }
 
 function updateScore(player) {
-getScore(player);
-score = score + 5;
-var scoreRef = firebase.database().ref("scores/p" + player + "/");
-scoreRef.update({val: score});
+    getScore();
+    score = score + 5;
+    var scoreRef = firebase.database().ref("scores/p" + player + "/");
+    scoreRef.update({
+        val: score
+    });
 }
 
 function removeScore(player) {
-getScore(player);
-score = score - 5;
-var scoreRef = firebase.database().ref("scores/p" + player + "/");
-scoreRef.update({val: score});
+    getScore();
+    score = score - 5;
+    var scoreRef = firebase.database().ref("scores/p" + player + "/");
+    scoreRef.update({
+        val: score
+    });
 }
 
 function write2() {
-alert("I am an alert box!");
+    alert("I am an alert box!");
 }
 
-function getScore(num) {
-firebase.database().ref("scores/p1/").once("value", function(snapshot) {
-		score = snapshot.val().val;
-	});
+function getScore() {
+    firebase.database().ref("scores/p1/").once("value", function(snapshot) {
+        score = snapshot.val().val;
+        document.getElementById("displayScore").innerHTML = "Score: " + score;
+    });
 }
 
 function getLen() {
-firebase.database().ref().once("value", function(snapshot) {
-		len = snapshot.val().leng;
-	});
+    firebase.database().ref().once("value", function(snapshot) {
+        len = snapshot.val().leng;
+    });
 }
 
 function readQues(num) {
-firebase.database().ref("q" + num + "/").once("value", function(snapshot) {
-		qu = snapshot.val().q;
-	});
+    firebase.database().ref("q" + num + "/").once("value", function(snapshot) {
+        qu = snapshot.val().q;
+    });
 }
 
 function readAns(num) {
-firebase.database().ref("q" + num + "/").once("value", function(snapshot) {
-		an = snapshot.val().a;
-	});
+    firebase.database().ref("q" + num + "/").once("value", function(snapshot) {
+        an = snapshot.val().a;
+    });
 }
 
 function setQues() {
-readAns(curNum);
-curNum = Math.floor((Math.random() * len)) + 1;
-readQues(curNum);
-$('.quesType').data('text', qu);
+    readAns(curNum);
+    curNum = Math.floor((Math.random() * len)) + 1;
+    readQues(curNum);
+    $('.quesType').data('text', qu);
 }
 
 function typeWriter(text, n) {
-  if ((n < (text.length)) && !pause) {
-  	if (correct) {
-  		return;
-  	}
-    $('.quesType').html(text.substring(0, n+1));
-    n++;
-    setTimeout(function() {
-      typeWriter(text, n)
-    }, 10);
-  }
-  if (n == text.length) {
-  	finish = true;
-  }
+    if ((n < (text.length)) && !pause) {
+        if (correct) {
+            return;
+        }
+        $('.quesType').html(text.substring(0, n + 1));
+        n++;
+        setTimeout(function() {
+            typeWriter(text, n)
+        }, 10);
+    }
+    if (n == text.length) {
+        finish = true;
+    }
 }
 
 function startText() {
-	if (finish && !buzzed)
-	{
-		setQues();
-		correct = false;
-		var text = $('.quesType').data('text');
-		typeWriter(text, 0);
-		finish = false;
-	}
+    if (finish && !buzzed) {
+        setQues();
+        correct = false;
+        var text = $('.quesType').data('text');
+        typeWriter(text, 0);
+        finish = false;
+        $('div').removeClass('has-success');
+        $('div').removeClass('has-error');
+        $('div').removeClass('has-warning');
+        document.getElementById("inputAnswer").value = "";
+    }
 
 }
 
 function buzz() {
-	pause = true;
-	buzzed = true;
-	$('div').removeClass('has-success');
-	$('div').removeClass('has-error');
-	$('div').addClass('has-warning');
+    document.getElementById("inputAnswer").focus();
+    pause = true;
+    buzzed = true;
+    $('div').removeClass('has-success');
+    $('div').removeClass('has-error');
+    $('div').addClass('has-warning');
 }
 
 function answer() {
-	if (buzzed)
-	{
-		pause = false;
-		var text = $('.quesType').data('text');
-		typeWriter(text, $('.quesType').text().trim().length);
-		var response = $('input').val();
-		$('div').removeClass('has-warning');
-		$('div').removeClass('has-success');
-		$('div').removeClass('has-error');
-		if (response === an)
-		{
-			updateScore(1);
-			$('div').addClass('has-success');
-			correct = true;
-			$('.quesType').html(text.substring(0, text.length));
-			finish = true;
-		}
-		else
-		{
-			removeScore(1);
-			$('div').addClass('has-error');
-		}
-	}
-	buzzed = false;
+    if (buzzed) {
+        pause = false;
+        var text = $('.quesType').data('text');
+        typeWriter(text, $('.quesType').text().trim().length);
+        var response = $('input').val();
+        $('div').removeClass('has-warning');
+        $('div').removeClass('has-success');
+        $('div').removeClass('has-error');
+        if (response === an) {
+            updateScore(1);
+            $('div').addClass('has-success');
+            correct = true;
+            $('.quesType').html(text.substring(0, text.length));
+            finish = true;
+        } else {
+            removeScore(1);
+            $('div').addClass('has-error');
+        }
+        getScore();
+    }
+    buzzed = false;
 
 }
-

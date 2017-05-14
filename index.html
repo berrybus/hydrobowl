@@ -40,7 +40,7 @@
     </script>
 
     <script src=
-    "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+    "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.js">
     </script>
     <script src="js/bootstrap.js">
     </script>
@@ -91,7 +91,7 @@
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">Answer</span>
                 <input aria-describedby="basic-addon1" class="form-control"
-                placeholder="Kafka" type="text">
+                placeholder="Kafka" type="text" id="inputAnswer">
               </div>
             </div>
             <div class="col-md-2">
@@ -101,15 +101,7 @@
           </div><br>
         </div>
         <div class="col-md-4">
-          <h3>
-            Leaderboard
-          </h3>
-          <p>
-            1. boaty mcboaty face
-          </p>
-          <p>
-            2. everyone else
-          </p>
+          <h3 id="displayScore">Score: 0</h3>
         </div>
       </div>
       <div class="row">
