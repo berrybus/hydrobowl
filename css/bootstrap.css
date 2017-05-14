@@ -6754,4 +6754,9 @@ button.close {
     display: none !important;
   }
 }
+
+/*Personal modifications */
+body, html, .container-fluid {
+         height: 100%;
+}
 /*# sourceMappingURL=bootstrap.css.map */
