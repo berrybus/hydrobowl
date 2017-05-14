@@ -82,50 +82,12 @@
     </nav>
     <div class="container">
       <div class="row">
-        <div class="col-md-8">
-          <div style="height:200px; display: block;">
-            <h3>Question</h3>
-            <div id="curQues" class="quesType" data-text=""></div>
-          </div>
-          <div class="row">
-            <div class="col-md-10">
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Answer</span>
-                <input aria-describedby="basic-addon1" class="form-control"
-                placeholder="Kafka" type="text" id="inputAnswer">
-              </div>
-            </div>
-            <div class="col-md-2">
-              <button class="btn btn-warning" onclick="answer()" type=
-              "button">Confirm</button>
-            </div>
-          </div><br>
-        </div>
-        <div class="col-md-4">
-          <h3 id="displayScore">Score: 0</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-          <button class="btn btn-success" onclick="startText()" type=
-          "button">Next</button> <button class="btn btn-info" onclick="buzz()"
-          type="button">Buzz</button> <button class="btn btn-danger" onclick="giveup()"
-          type="button">Give Up</button>
-          <br></br>
-          <h4 id="correctAns">Correct Answer: </h4>
-        </div>
-        <div class="col-md-4">
-          <h3>
-            Settings
-          </h3>
-           <div class="form-group">
-  <label for="comment">Paste questions here: </label>
-  <textarea class="form-control" rows="5" id="uploadQues"></textarea>
-</div> 
-<button class="btn btn-primary" type="button" onclick="parseText()">Upload
-          Questions</button>
-        </div>
-      </div>
+      <h1>Keyboard shortcuts</h1>
+      <p class="lead">Use <kbd>Space</kbd> to buzz, <kbd>Enter</kbd> to confirm your answer, <kbd>n</kbd> to go to the next question, and <kbd>s</kbd> to give up and get the answer.</p>
+      <h1>Question Set Input</h1>
+      <p class="lead">Please delimit each question/answer set with <code>^^^</code> and inside each question, delimit the actual question and answer with <code>$$</code>.
+      <h2>Example</h2>
+<pre>A rival pulls this character’s bodice laces too tight, causing her to faint, and brushes this girl’s hair with a poisoned comb. A hunter pretends to bring the organs of this girl to the queen, whose magic (*) mirror tells her that this character has gone to live with seven dwarves. For 10 points, name this protagonist of a Grimm brothers fairy tale, a pale­skinned princess.$$Snow White^^^After the death of this man, The Liberators’ Civil War was fought in Macedonia. This man introduced the concept of leap years in his namesake calendar, and he claimed “The die is cast” before crossing the (*) Rubicon river. This man won the Battle of Alesia, a victory over Vercingetorix. For 10 points, name this Roman Emperor who legendarily asked, “Et tu, Brute?” while being assassinated on the Ides of March.$$Caesar^^^One of these musical works opens its Andante movement with fifteen and a half bars of soft theme followed by a sudden loud chord. Another of these works was originally dedicated to Napoleon, and is nicknamed Eroica. A (*) "short­short­short long" motif opens one of these long musical pieces written by Beethoven. For 10 points, name this four­movement genre of music exemplified by Haydn's [HY­din’s] Surprise, and Beethoven's Fifth.$$Symphony^^^A couple in this short story discuss shortening the name “Dillingham” to “D” on their letterbox. A character in this story pays twenty­one dollars for a platinum chain after Madame Sofronie cuts her hair. Della sells her (*) hair to buy a watch fob and Jim sells his watch to buy combs in, for 10 points, what O. Henry short story about ironic Christmas gifts?$$Gift of the Magi^^^This disease is caused by the variola virus, and the major symptom of this illness include fluid­filled macules that blister, forming scars. Dr Edward Jenner developed the first vaccine against this disease by studying a related illness in (*) milkmaids. This disease was declared eradicated in 1979. For 10 points, name this infectious disease that killed many natives of the Americas and was probably a mutated form of cowpox.$$Smallpox</pre>
     </div>
   </body>
 </html>

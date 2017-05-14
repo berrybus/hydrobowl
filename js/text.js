@@ -3,20 +3,17 @@ var buzzed = false;
 var curNum = 1;
 var finish = true;
 var correct = false;
-var qu = "";
-readQues(curNum)
-var an = "";
-readAns(curNum)
 var len = 1;
 getLen();
+var qu = "";
+var an = "";
+readQues(curNum);
+readAns(curNum);
 var score = 0;
 getScore();
 
-
-
 function runFirst() {
     document.getElementById("inputAnswer").value = "";
-
     document.body.onkeyup = function(e) {
         if (e.keyCode == 32) {
             if (this === document.activeElement) {
@@ -35,7 +32,13 @@ function runFirst() {
                 document.activeElement.blur();
             }
         }
-
+        
+        if (e.keyCode == 83) {
+            if (this === document.activeElement) {
+            	giveup();
+            }
+        }
+        
         if (e.keyCode === 27) {
             document.activeElement.blur();
         }
@@ -44,6 +47,20 @@ function runFirst() {
 
 window.onload = runFirst;
 
+function parseText() {
+	var str = document.getElementById("uploadQues").value;
+	var res = str.split("^^^");
+	for (var i = 1; i <= res.length; i++) {
+		var parts = res[i-1].split("$$");
+		var qRef = firebase.database().ref("q" + i + "/");
+		qRef.set({
+			q: parts[0],
+			a: parts[1]
+			});
+	}
+	
+	firebase.database().ref().update({leng: res.length});
+}
 function write4() {
     var playersRef = firebase.database().ref("players/");
 
@@ -108,7 +125,7 @@ function readAns(num) {
 }
 
 function setQues() {
-    readAns(curNum);
+		readAns(curNum);
     curNum = Math.floor((Math.random() * len)) + 1;
     readQues(curNum);
     $('.quesType').data('text', qu);
@@ -123,7 +140,7 @@ function typeWriter(text, n) {
         n++;
         setTimeout(function() {
             typeWriter(text, n)
-        }, 10);
+        }, 30);
     }
     if (n == text.length) {
         finish = true;
@@ -133,6 +150,7 @@ function typeWriter(text, n) {
 function startText() {
     if (finish && !buzzed) {
         setQues();
+        $('.quesType').data('text', qu);
         correct = false;
         var text = $('.quesType').data('text');
         typeWriter(text, 0);
@@ -146,12 +164,16 @@ function startText() {
 }
 
 function buzz() {
+	if (!correct)
+	{
     document.getElementById("inputAnswer").focus();
     pause = true;
     buzzed = true;
     $('div').removeClass('has-success');
     $('div').removeClass('has-error');
     $('div').addClass('has-warning');
+    document.getElementById("inputAnswer").value = "";
+   }
 }
 
 function answer() {
@@ -163,12 +185,16 @@ function answer() {
         $('div').removeClass('has-warning');
         $('div').removeClass('has-success');
         $('div').removeClass('has-error');
-        if (response === an) {
+				f = FuzzySet([an]);
+        var close = f.get(response);
+ 
+        if (close[0][0] > 0.6) {	
             updateScore(1);
             $('div').addClass('has-success');
             correct = true;
             $('.quesType').html(text.substring(0, text.length));
             finish = true;
+            document.getElementById("correctAns").innerHTML = "Correct Answer: " + an;
         } else {
             removeScore(1);
             $('div').addClass('has-error');
@@ -176,5 +202,15 @@ function answer() {
         getScore();
     }
     buzzed = false;
+}
 
+function giveup()
+{
+	var text = $('.quesType').data('text');
+  typeWriter(text, $('.quesType').text().trim().length);
+	removeScore(1);
+	correct = true;
+	$('.quesType').html(text.substring(0, text.length));
+	finish = true;
+	document.getElementById("correctAns").innerHTML = "Correct Answer: " + an;
 }
