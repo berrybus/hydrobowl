@@ -187,8 +187,8 @@ function answer() {
         $('div').removeClass('has-error');
 				f = FuzzySet([an]);
         var close = f.get(response);
- 
-        if (close[0][0] > 0.6) {	
+
+        if ((close != null) && (close[0][0] > 0.6)){
             updateScore(1);
             $('div').addClass('has-success');
             correct = true;
@@ -196,8 +196,10 @@ function answer() {
             finish = true;
             document.getElementById("correctAns").innerHTML = "Correct Answer: " + an;
         } else {
-            removeScore(1);
-            $('div').addClass('has-error');
+        		removeScore(1);
+        		$('div').removeClass('has-warning');
+        		$('div').addClass('has-error');
+
         }
         getScore();
     }
