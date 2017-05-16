@@ -74,43 +74,25 @@
     </nav>
     <div class="container">
       <div class="row">
-        <div class="col-md-8">
-          <div style="height:200px; display: block;">
-            <h3>Question</h3>
-            <div id="curQues" class="quesType" data-text=""></div>
-            <br></br>
-          </div>
+<center><h1>Upload Questions</h1></center>
+<br></br>
+<p class="lead">Please read the instructions first! Incorrectly formatted question inputs will destroy the database :( </p>
+           <div class="form-group">
+  <label for="comment">Replace packet: </label>
+  <textarea class="form-control" rows="5" id="uploadQues1"></textarea>
+</div> 
+<button class="btn btn-primary" type="button" onclick="parseText()">Confirm</button>
+    </div>    
+    <br></br>
           <div class="row">
-            <div class="col-md-10">
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Answer</span>
-                <input aria-describedby="basic-addon1" class="form-control"
-                placeholder="Kafka" type="text" id="inputAnswer">
-              </div>
-            </div>
-            <div class="col-md-2">
-              <button class="btn btn-warning" onclick="answer()" type=
-              "button">Confirm</button>
-            </div>
-          </div><br>
-        </div>
-        <div class="col-md-4">
-          <h3 id="displayScore">Score: 0</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-          <button class="btn btn-success" onclick="startText()" type=
-          "button">Next</button> <button class="btn btn-info" onclick="buzz()"
-          type="button">Buzz</button> <button class="btn btn-danger" onclick="giveup()"
-          type="button">Give Up</button>
-          <br></br>
-          <h4 id="correctAns">Correct Answer: </h4>
-        </div>
-        <div class="col-md-4">
 
-        </div>
-      </div>
-    </div>
+           <div class="form-group">
+  <label for="comment">Update packet: </label>
+  <textarea class="form-control" rows="5" id="uploadQues2"></textarea>
+</div> 
+<button class="btn btn-primary" type="button" onclick="updateText()">Confirm</button>
+    </div>    
+</div>
+    
   </body>
 </html>

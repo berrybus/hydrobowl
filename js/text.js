@@ -48,7 +48,7 @@ function runFirst() {
 window.onload = runFirst;
 
 function parseText() {
-	var str = document.getElementById("uploadQues").value;
+	var str = document.getElementById("uploadQues1").value;
 	var res = str.split("^^^");
 	for (var i = 1; i <= res.length; i++) {
 		var parts = res[i-1].split("$$");
@@ -60,7 +60,26 @@ function parseText() {
 	}
 	
 	firebase.database().ref().update({leng: res.length});
+	getLen();
 }
+
+function updateText() {
+	getLen();
+
+	var str = document.getElementById("uploadQues2").value;
+	var res = str.split("^^^");
+	for (var i = 0; i < res.length; i++) {
+		var j = i + len;
+		var parts = res[i].split("$$");
+		var qRef = firebase.database().ref("q" + j + "/");
+		qRef.set({
+			q: parts[0],
+			a: parts[1]
+			});
+	}
+	firebase.database().ref().update({leng: res.length + len});
+}
+
 function write4() {
     var playersRef = firebase.database().ref("players/");
 
