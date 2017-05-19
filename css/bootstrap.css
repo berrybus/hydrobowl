@@ -2487,6 +2487,10 @@ table th[class*="col-"] {
   .table-responsive > .table-bordered > tfoot > tr:last-child > td {
     border-bottom: 0;
   }
+  
+  div#quesBlock {
+  display: none !important
+  }
 }
 fieldset {
   min-width: 0;
